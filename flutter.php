@@ -3,7 +3,7 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "flutter_php";
-$table = "table_user"; // lets create a table named Employees.
+$table = "table_user";
 // we will get actions from the app to do operations in the database...
 $action = $_POST["action"];
 // Create Connection
@@ -14,7 +14,6 @@ if ($conn->connect_error) {
     return;
 }
 
-// Add an Employee
 if ("ADD_USER" == $action) {
     // App will be posting these values to this server
     $user_name = $_POST["user_name"];
