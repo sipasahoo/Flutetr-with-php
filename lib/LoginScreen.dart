@@ -73,12 +73,18 @@ class HomePageState extends State<LoginScreen> {
   void _validateInputs() {
     final form = _formKey.currentState;
     if (form.validate()) {
-      print(email);print(password);
       Services.getLoginUser(email, password).then((users) {
         // ignore: missing_return
         setState(() async {
           _users = users.cast<User>();
-          if (_users.length == 0) {
+          if (_users.length > 0 && _users != null) {
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString('email', email);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ChatScreen()),
+            );
+          } else {
             Fluttertoast.showToast(
                 msg: 'Invalid Authentication',
                 toastLength: Toast.LENGTH_SHORT,
@@ -86,13 +92,6 @@ class HomePageState extends State<LoginScreen> {
                 timeInSecForIos: 1,
                 backgroundColor: Colors.red,
                 textColor: Colors.white);
-          } else {
-            SharedPreferences prefs = await SharedPreferences.getInstance();
-            prefs.setString('email', email);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ChatScreen()),
-            );
           }
         });
       });

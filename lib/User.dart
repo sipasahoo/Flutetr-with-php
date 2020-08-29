@@ -14,7 +14,7 @@ class User {
     );
   }
   Map toMap() {
-    var map = new Map<String, dynamic>();
+    var map = Map<String, dynamic>();
     map["id"] = id;
     map["user_name"] = username;
     map["user_email"] = useremail;

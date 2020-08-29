@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_php/ChatDetail.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
@@ -7,7 +8,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<ChatScreen> {
-  void initState() {
+  initState() {   
     super.initState();
   }
 
@@ -15,46 +16,47 @@ class _MyHomePageState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
-      child: new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.teal[600],
-          title: new Text('WhatsApp'),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.search),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Icon(Icons.more_vert),
-            ),
-          ],
-          bottom: TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.camera_alt),),
-              Tab(text: "CHAT"),
-              Tab(text: "STATUS"),
-              Tab(text: "CALL")
+      child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.teal[600],
+            title: Text('WhatsApp'),
+            actions: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.search),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Icon(Icons.more_vert),
+              ),
             ],
-            indicatorColor: Colors.white,
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.camera_alt),
+                ),
+                Tab(text: "CHAT"),
+                Tab(text: "STATUS"),
+                Tab(text: "CALL")
+              ],
+              indicatorColor: Colors.white,
+            ),
           ),
-        ),
-        body: TabBarView(
-          children: [
-            FirstScreen(),
-            FirstScreen(),
-            FirstScreen(),
-            FirstScreen(),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: Icon(Icons.chat),
-        backgroundColor: Colors.greenAccent[400],
-      )
-      ),
+          body: TabBarView(
+            children: [
+              FirstScreen(),
+              FirstScreen(),
+              FirstScreen(),
+              FirstScreen(),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              // Add your onPressed code here!
+            },
+            child: Icon(Icons.chat),
+            backgroundColor: Colors.greenAccent[400],
+          )),
     );
   }
 }

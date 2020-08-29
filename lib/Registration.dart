@@ -92,7 +92,7 @@ class HomePageState extends State<RegisterUser> {
         "\\." +
         "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
         ")+";
-    RegExp regExp = new RegExp(p);
+    RegExp regExp = RegExp(p);
   
 
     if (regExp.hasMatch(value)) {
@@ -121,7 +121,7 @@ class HomePageState extends State<RegisterUser> {
     return Scaffold(
       backgroundColor: Colors.cyan[900],
       body: SingleChildScrollView(
-          child: new Container(
+          child: Container(
         child: Column(
           children: <Widget>[
             Center(
@@ -196,7 +196,7 @@ class HomePageState extends State<RegisterUser> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.all(17),
-                              child: new TextFormField(
+                              child: TextFormField(
                                 decoration:
                                     const InputDecoration(labelText: 'Name'),
                                 onSaved: (String value) {

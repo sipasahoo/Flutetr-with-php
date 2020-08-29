@@ -3,15 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:flutter_php/ChatScreen.dart';
 import 'dart:async';
 import 'package:flutter_php/LoginScreen.dart';
+import 'package:flutter_php/chatprovider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
-  runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: email == null ? MyApp() : ChatScreen()));
+  runApp(ChangeNotifierProvider(
+      create: (context) => ChatModel(),
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: email == null ? MyApp() : ChatScreen())));
 }
 // void main() {
 //   runApp(new MaterialApp(
@@ -38,23 +42,33 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    return new MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: new ThemeData(
-          primarySwatch: Colors.blue,
-          hintColor: Colors.white,
-          inputDecorationTheme: new InputDecorationTheme(
-              labelStyle: new TextStyle(color: Colors.white),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4.0)))),
-      home: new SplashPage(),
-      routes: <String, WidgetBuilder>{
-        '/HomePage': (BuildContext context) => new LoginScreen()
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ChatModel>(
+          create: (BuildContext context) {
+            return ChatModel();
+          },
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+            primarySwatch: Colors.blue,
+            hintColor: Colors.white,
+            inputDecorationTheme: InputDecorationTheme(
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4.0)))),
+        home: SplashPage(),
+        routes: <String, WidgetBuilder>{
+          '/HomePage': (BuildContext context) => LoginScreen()
+        },
+      ),
     );
   }
 }
+
 class SplashPage extends StatefulWidget {
   @override
   SplashPageState createState() => SplashPageState();
